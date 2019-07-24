@@ -6,25 +6,33 @@ class NewItem extends Component {
     value: ""
   };
 
-  handleChange = event => {
-    //
-  };
+  handleChange = ({target}) => this.setState(({value: target.value}));
 
-  handleSubmit = event => {
-    //
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.addTask(this.state.value);
+    this.setState({value: ''});
   };
 
   render() {
     const { value } = this.state;
 
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <div className="row">
           <div className="col-md-10">
-            <input className="form-control mb-3" type="text" value={value} />
+            <input
+                className="form-control mb-3"
+                type="text" value={value}
+                onChange={this.handleChange}
+            />
           </div>
           <div className="col-md-2">
-            <input className="btn btn-success" type="submit" value="Add item" />
+            <input
+                className="btn btn-success"
+                type="submit"
+                value="Add item"
+            />
           </div>
         </div>
       </form>

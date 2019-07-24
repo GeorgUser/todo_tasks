@@ -3,7 +3,7 @@ import "./Item.css";
 
 class Item extends Component {
   render() {
-    const { item, removeItem } = this.props;
+    const { item, removeItem, togleItem } = this.props;
     const { packed, id, value } = item;
     return (
       <li className="item-box">
@@ -12,7 +12,7 @@ class Item extends Component {
             className="form-check-input"
             type="checkbox"
             checked={packed}
-            onChange={() => {}}
+            onChange={togleItem(id)}
             id={id}
           />
           <label className="form-check-label" htmlFor={id}>
