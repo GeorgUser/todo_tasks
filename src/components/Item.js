@@ -3,23 +3,24 @@ import "./Item.css";
 
 class Item extends Component {
   render() {
-    const { item } = this.props;
+    const { item, removeItem } = this.props;
+    const { packed, id, value } = item;
     return (
       <li className="item-box">
         <div className="form-check">
           <input
             className="form-check-input"
             type="checkbox"
-            checked={item.packed}
+            checked={packed}
             onChange={() => {}}
-            id={item.id}
+            id={id}
           />
-          <label className="form-check-label" htmlFor={item.id}>
+          <label className="form-check-label" htmlFor={id}>
             {" "}
-            {item.value}
+            {value}
           </label>
         </div>
-        <button className="btn btn-secondary btn-sm" onClick={() => {}}>
+        <button className="btn btn-secondary btn-sm" onClick={removeItem(id)}>
           Remove
         </button>
       </li>

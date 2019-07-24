@@ -1,36 +1,57 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
+import { generate as id } from "shortid";
 import NewItem from "./components/NewItem";
 import ListItems from "./components/ListItems";
-import { defaultState } from "./data";
+import {defaultState} from "./data";
 
 class App extends Component {
-  state = {
-    items: []
-  };
+    state = {
+        items: []
+    };
 
     componentDidMount() {
-      this.setState({items: defaultState})
+        this.setState({items: defaultState})
     }
 
-  render() {
-      const { items } = this.state;
-    return (
-      <div className="container py-3">
-        <NewItem />
-        <div className="row">
-          <div className="col-md-5">
-            <ListItems title="Unpacked Items" items={items.filter(({packed})=> !packed)} />
-          </div>
-          <div className="offset-md-2 col-md-5">
-            <ListItems title="Packed Items" items={items.filter(({packed})=> packed)} />
-            <button className="btn btn-danger btn-lg btn-block">
-              Mark All As Unpacked
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+    allUnpacked = e =>
+        this.setState(({items}) => ({
+            items: items.map(item => ({...item, packed: false}))
+        }));
+
+    removeItem = id => e =>
+        this.setState(({items}) => ({
+        items: items.filter(item => item.id !== id)
+    }));
+
+    render() {
+        const {items} = this.state;
+        const unpackedItems = items.filter(({packed}) => !packed);
+        const packedItems = items.filter(({packed}) => packed);
+        return (
+            <div className="container py-3">
+                <NewItem/>
+                <div className="row">
+                    <div className="col-md-5">
+                        <ListItems
+                            title="Unpacked Items"
+                            items={unpackedItems}
+                            removeItem={this.removeItem}
+                        />
+                    </div>
+                    <div className="offset-md-2 col-md-5">
+                        <ListItems
+                            title="Packed Items"
+                            items={packedItems}
+                            removeItem={this.removeItem}
+                        />
+                        <button className="btn btn-danger btn-lg btn-block" onClick={this.allUnpacked}>
+                            Mark All As Unpacked
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;

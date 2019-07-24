@@ -8,13 +8,13 @@ class ListItems extends Component {
   updateFilter = searchTerm => {};
 
   render() {
-    const { title, items, flag } = this.props;
+    const { title, items, removeItem } = this.props;
     return (
       <section>
         <h3 className="mb-3">{title}</h3>
         <Filter filter={""} onChange={this.updateFilter} />
         <ul className="mb-3 p-0">
-            {items.map(item => <Item key={item.id} item={item} />)}
+            {items.map(item => <Item key={item.id} item={item} removeItem={removeItem}/>)}
         </ul>
       </section>
     );
