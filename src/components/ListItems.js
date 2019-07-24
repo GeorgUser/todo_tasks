@@ -3,19 +3,24 @@ import Item from "./Item";
 import Filter from "./Filter";
 
 class ListItems extends Component {
-    state = {};
+    state = {
+        filter: ''
+    };
 
     updateFilter = searchTerm => {
+        this.setState(({filter: searchTerm}))
     };
 
     render() {
         const {title, items, removeItem, togleItem} = this.props;
+        const {filter} = this.state;
+        const filterItems = items.filter(item => item.value.toLowerCase().includes(filter.toLowerCase()));
         return (
             <section>
                 <h3 className="mb-3">{title}</h3>
-                <Filter filter={""} onChange={this.updateFilter}/>
+                <Filter filter={filter} onChange={this.updateFilter}/>
                 <ul className="mb-3 p-0">
-                    {items.map(item =>
+                    {filterItems.map(item =>
                         <Item key={item.id}
                               item={item}
                               removeItem={removeItem}
